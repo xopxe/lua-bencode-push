@@ -1,6 +1,7 @@
 local M = {}
 
 -------------------------------------------------------
+-- replace these with you callbacks
 M.push_number = function (level, n)
   print ('level', level, 'number', n)
 end
@@ -23,7 +24,6 @@ end
 
 local pos, level = 1, 0
 local s, machine, emb_any
-local byte0, byte9 = string.byte('0'), string.byte('9')
 local str_length = 0
 
 local function to_state(f)
@@ -105,7 +105,7 @@ emb_any = function ()
     pos, level = pos + 1, level - 1
     M.push_pop(level)
     return to_state(emb_any)
-  elseif ch:byte()>=byte0 and ch:byte()<=byte9 then
+  elseif ch>='0' and ch<='9' then
     str_length = 0
     return to_state(emb_len)
   end
