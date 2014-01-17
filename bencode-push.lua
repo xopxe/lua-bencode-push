@@ -1,6 +1,5 @@
 local M = {}
 
-
 M.decoder = function (callbacks)
   local pos, level = 1, 0
   local s, machine, emb_any
@@ -47,7 +46,7 @@ M.decoder = function (callbacks)
     local ch = s:sub(pos, pos)
     pos = pos + 1
     if ch == ':' then
-      callbacks.push_len(level, str_length)
+      callbacks.push_string_len(level, str_length)
       return to_state(emb_str)
     end
     str_length = 10*str_length + ch:byte() - 48 --tonumber(ch)
@@ -98,6 +97,36 @@ M.decoder = function (callbacks)
   end
 end
 
+M.encoder = function (callback)
+  return {
+    push_number = function (n)
+      callback('i')
+      callback(tostring(n))
+      callback('e')
+    end,
+    push_dict = function ()
+      callback('d')
+    end,
+    push_list = function ()
+      callback('l')
+    end,
+    push_string = function (s)
+      callback(tostring(#s))
+      callback(':')
+      callback(tostring(s))
+    end,
+    push_string_length = function (n)
+      callback(tostring(n))
+      callback(':')
+    end,
+    push_string_fragment = function (s)
+      callback(s)
+    end,
+    pop = function ()
+      callback('e')
+    end,
+  }  
+end
 
 return M
 
