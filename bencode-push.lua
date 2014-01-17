@@ -37,7 +37,7 @@ M.decoder = function (callbacks)
       if str_length>0 then 
         callbacks.push_string_fragment(level, s:sub(pos, pos+str_length-1)) 
       end
-      callbacks.push_string_fragment(level, '')
+      callbacks.push_string_fragment(level, nil)
       pos = pos + str_length
       return to_state(emb_any)
     end

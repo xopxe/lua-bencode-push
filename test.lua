@@ -5,10 +5,14 @@ local callbacks = {
     print ('level', level, 'number', n)
   end,
   push_len = function (level, length)
-    print ('level', level, 'length', length)
+    print ('level', level, 'string length', length)
   end,
   push_string_fragment = function (level, string)
-    print ('level', level, 'fragment', '['..#string..']', string)
+    if string then 
+      print ('level', level, 'string fragment', '['..#string..']', string)
+    else
+      print ('level', level, 'string end')
+    end
   end,
   push_list = function (level)
     print ('level', level, 'list')
@@ -31,7 +35,7 @@ decode('efghij')
 ---[[
 decode('li10e')
 decode('10:abcd')
-decode('efghij')
+decode('efghije')
 decode('li20ei30ee')
 
 decode('d3:bar4:spam3:fooi42ee')
