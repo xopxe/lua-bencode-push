@@ -21,7 +21,7 @@ M.decoder = function (callbacks)
       accum_number = 0
       return to_state(emb_any);
     end
-    accum_number = 10*accum_number + tonumber(ch)
+    accum_number = 10*accum_number + ch:byte() - 48 --tonumber(ch)
     return emb_int()
   end
 
@@ -52,7 +52,7 @@ M.decoder = function (callbacks)
       callbacks.push_len(level, str_length)
       return to_state(emb_str)
     end
-    str_length = 10*str_length + tonumber(ch)
+    str_length = 10*str_length + ch:byte() - 48 --tonumber(ch)
     return emb_len()
   end
 
